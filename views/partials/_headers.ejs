@@ -10,10 +10,20 @@
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
+        <% if (!username) { %>
           <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" method="POST" action="/login">
-            <input class="form-control mr-sm-2" type="text" placeholder="username" name= username aria-label="Search">
+            <input name = "username" class="form-control mr-sm-2" type="text" placeholder="username" name="username" aria-label="Search">
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
+          <% } else { %>
+            <div class="collapse navbar-collapse" id="logout">
+                <div class="navbar-nav w-100">
+                  <a class="nav-item nav-link"><%=username%></a>
+                  <div method="POST" action="/logout">
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                  </div>
+                </div> 
+              <% } %>
     </div>
   </nav>
 </header>
