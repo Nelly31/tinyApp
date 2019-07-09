@@ -30,7 +30,7 @@ app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b> World</b></body></html>\n");
 });
 
-//urls homepade
+//urls homepage
 app.get("/urls", (req,res) => {
   let templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
@@ -75,6 +75,20 @@ app.post("/urls", (req, res) => {
   urlDatabase[shortURL] = req.body.longURL;
   res.redirect(`/urls/${shortURL}`);
 });
+
+//login
+
+app.post("/login", (req, res) => {
+  let username = req.body.username;
+  res.cookie("name", username);
+  res.redirect("/urls");
+  let templateVars = {
+    username: req.cookies["username"],
+  };
+  res.render("urls_index", templateVars);
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
