@@ -43,7 +43,10 @@ app.get("/urls", (req,res) => {
 
 //adding a new url
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  let templateVars = {
+    username: req.cookies["username"]
+  };
+  res.render("urls_new", templateVars);
 });
 
 //generating the short url and redirecting to URLS show
@@ -83,7 +86,12 @@ app.post("/login", (req, res) => {
   res.cookie("username", req.body.username);
 
   res.redirect("/urls");
-  console.log(req.cookie["username"]);
+});
+
+app.post("/logout", (req, res) => {
+  res.clearCookie("username");
+
+  res.redirect("/urls");
 });
 
 app.post("/urls", (req, res) => {

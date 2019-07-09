@@ -19,9 +19,9 @@
             <div class="collapse navbar-collapse" id="logout">
                 <div class="navbar-nav w-100">
                   <a class="nav-item nav-link"><%=username%></a>
-                  <div method="POST" action="/logout">
+                  <form method="POST" action="/logout" name="logout">
                     <button type="submit" class="btn btn-primary">Logout</button>
-                  </div>
+                  </form>
                 </div> 
               <% } %>
     </div>
