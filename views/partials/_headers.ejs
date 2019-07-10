@@ -11,19 +11,17 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
         <% if (!user) { %>
-          <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" method="POST" action="/login">
-            <input name = "userID" class="form-control mr-sm-2" type="text" placeholder="Email" name="userID" aria-label="Search">
+          <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" method="GET" action="/login">
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
+          <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" method="GET" action="/register">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
           <% } else { %>
-            <div class="collapse navbar-collapse" id="logout">
-                <div class="navbar-nav w-100">
-                  <a class="nav-item nav-link"><%=user["email"]%></a>
-                  <form method="POST" action="/logout" name="logout">
-                    <button type="submit" class="btn btn-primary">Logout</button>
-                  </form>
-                </div> 
-              <% } %>
+            <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" name="logout" id="logout" method="POST" action="/logout">
+            <button type="submit" class="btn btn-primary">Logout</button>
+            </form> 
+          <% } %>
     </div>
   </nav>
 </header>

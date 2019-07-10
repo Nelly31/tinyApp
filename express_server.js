@@ -28,12 +28,20 @@ let users = {
 };
 
 //check if an email is already registered
+// const checkUserEmail = (bodyEmail) => {
+//   for (let user in users) {
+//     if (users[user].email === bodyEmail) {
+//       return users[user];
+//     }
+//   } return false;
+// };
+
 const checkUserEmail = (bodyEmail) => {
   for (let user in users) {
     if (users[user].email === bodyEmail) {
-      return users[user];
+      return {valid:true, user:users[user]};
     }
-  } return false;
+  } return {valid:false, user:null};
 };
 
 const generateRandomString = function () {
@@ -63,11 +71,12 @@ app.get("/login", (req, res) => {
 
 //login
 app.post("/login", (req, res) => {
-  if (checkUserEmail(req.body.email)) {
-    let userObj = checkUserEmail(req.body.email);
-    if (userObj.password === req.body.password) {
-      res.cookie("userID", userObj.id);
+  const {valid, user} = checkUserEmail(req.body.email);
+  if (valid) {
+    if (user.password === req.body.password) {
+      res.cookie("userID", user.id);
       res.redirect("/urls");
+      return;
     } else {
       res.status(403).send("Error! Incorrect password, Please try again... or... perhaps try registering!?");
     }
@@ -75,7 +84,6 @@ app.post("/login", (req, res) => {
     res.status(403).send("Error incorrect email, Please try again... or... perhaps try registering!?");
   }
 });
-
 
 //registration
 app.get("/register", (req, res) => {
@@ -91,8 +99,8 @@ app.post("/register", (req, res) => {
   if (req.body.email === "" || req.body.password === "") {
     res.status(404).send("Not found, please enter a valid email and password.");
   }
-
-  if (checkUserEmail(req.body.email)) {
+  
+  if (checkUserEmail(req.body.email).valid) {
     res.status(404).send("Error, email already registered. Perhaps try logging in instead!?");
   } else {
     let userID = generateRandomString();
