@@ -161,8 +161,6 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
-  console.log(req.params);
-  console.log(req.params.shortURL);
   const shortURL = req.params.shortURL;
   delete urlDatabase[shortURL];
 
@@ -190,8 +188,8 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.post("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
-  urlDatabase[shortURL] = {longUrl: req.body.longURL, userID: users[req.cookies["userID"]]};
-
+  urlDatabase[shortURL] = {longURL: req.body.longURL, userID: users[req.cookies["userID"]].id};
+  console.log(urlDatabase);
   res.redirect("/urls");
 });
 
