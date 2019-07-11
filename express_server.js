@@ -3,6 +3,8 @@ const app = express();
 const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -65,8 +67,8 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const {valid, user} = checkUserEmail(req.body.email);
   if (valid) {
-    if (user.password === req.body.password) {
-      res.cookie("userID", user.id);
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      res.cookie("userID", user.userID);
       res.redirect("/urls");
       return;
     } else {
@@ -96,7 +98,8 @@ app.post("/register", (req, res) => {
     res.status(404).send("Error, email already registered. Perhaps try logging in instead!?");
   } else {
     let userID = generateRandomString();
-    users[userID] = { userID, email: req.body.email, password: req.body.password };
+    users[userID] = { userID, email: req.body.email, password: bcrypt.hashSync((req.body.password), saltRounds)};
+    console.log(users);
     res.cookie("userID", userID);
     res.redirect("/urls");
   }
@@ -190,7 +193,7 @@ app.get("/u/:shortURL", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     user: users[req.cookies["userID"]]};
-    
+
   if (urlDatabase[req.params.shortURL] && urlDatabase[req.params.shortURL].userID === req.cookies["userID"]) {
     const shortURL = req.params.shortURL;
     const longURL = urlDatabase[shortURL].longURL;
