@@ -11,14 +11,14 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
         <% if (!user) { %>
-          <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" method="GET" action="/login">
+          <form class="form-inline my-2 my-lg-0 pr-4 flex-shrink-1" style="flex-flow: row" method="GET" action="/login">
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
           <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" method="GET" action="/register">
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" margin-right: 5px class="btn btn-secondary">Register</button>
           </form>
           <% } else { %>
-            <form class="form-inline my-2 my-lg-0 flex-shrink-1" style="flex-flow: row" name="logout" id="logout" method="POST" action="/logout">
+            <form class="form-inline my-2 my-lg-0  flex-shrink-1" style="flex-flow: row" name="logout" id="logout" method="POST" action="/logout">
             <a class="nav-item nav-link"><%=user.email%></a>
             <button type="submit" class="btn btn-primary">Logout</button>
             </form> 

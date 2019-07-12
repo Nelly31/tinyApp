@@ -28,7 +28,7 @@
       <tbody>
         <% for(let key in userUrls) { %>
           <tr>
-            <td><%= key %></td>
+            <td><a href="<%=userUrls[key].longURL%>"target="_blank"><%= key %></a></td>
             <td><%= userUrls[key].longURL %></td>
             <td>
                 <form method="GET" action="/urls/<%=key%>">
