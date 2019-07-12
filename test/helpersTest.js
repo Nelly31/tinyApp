@@ -3,8 +3,7 @@ const {assert} = require('chai');
 const {checkUserEmail} = require('../helpers.js');
 const {generateRandomString} = require('../helpers.js');
 const {usersURL} = require('../helpers.js');
-const {testUsers} = require('../resources.js');
-const {urlDatabase} = require('../resources.js');
+
 
 const testUsers = {
   "userRandomID": {
