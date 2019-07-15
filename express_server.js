@@ -58,6 +58,10 @@ app.get("/login", (req, res) => {
 //login
 app.post("/login", (req, res) => {
   const {valid, user} = checkUserEmail(req.body.email, users);
+  if (req.body.email === "" || req.body.password === "") {
+    res.status(403).send("Error please ensure you have entered a valid email and password");
+  }
+  
   if (valid) {
     if (bcrypt.compareSync(req.body.password, user['password'])) {
       req.session.user_id = user['id'];
